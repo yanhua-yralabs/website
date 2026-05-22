@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sip.wine — Network School Showcase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #F2EDDC;
+    --cream-deep: #E5DDC0;
+    --burgundy: #0F4C2E;   /* deep forest green — primary */
+    --oxblood: #3B6B4F;    /* sage green — secondary */
+    --gold: #D4A538;       /* warm amber gold — accent */
+    --ink: #1A2A1E;        /* near-black with green undertone */
+    --paper: #FFFDF6;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6vh 8vw;
+  }
+
+  /* Soft gradient backdrop — echoes the app's green-to-gold blend */
+  .slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at top right, rgba(212, 165, 56, 0.18), transparent 60%),
+      radial-gradient(ellipse at bottom left, rgba(15, 76, 46, 0.14), transparent 60%),
+      radial-gradient(ellipse at center, rgba(212, 165, 56, 0.04), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .slide > * { position: relative; z-index: 1; }
+
+  /* Eyebrow */
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.7rem, 1vw, 0.9rem);
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2vh;
+  }
+
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 2.5em;
+    height: 1px;
+    background: var(--gold);
+    vertical-align: middle;
+    margin-right: 0.8em;
+    transform: translateY(-2px);
+  }
+
+  h1 {
+    font-family: 'Geist', sans-serif;
+    font-weight: 600;
+    font-size: clamp(2rem, 5.4vw, 4.6rem);
+    line-height: 1;
+    color: var(--burgundy);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--oxblood);
+    font-weight: 500;
+  }
+
+  .subhead {
+    font-family: 'Geist', sans-serif;
+    font-style: italic;
+    font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+    color: var(--ink);
+    opacity: 0.78;
+    margin-top: 1.8vh;
+    max-width: 56ch;
+  }
+
+  /* ===== QR row ===== */
+  .qr-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6vw;
+    align-items: center;
+    justify-items: center;
+    margin: 5vh auto 0;
+  }
+
+  .qr-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .qr-frame {
+    background: var(--paper);
+    padding: 1.8vw;
+    border-radius: 12px;
+    box-shadow:
+      0 1px 0 rgba(15, 76, 46, 0.18),
+      0 20px 40px -20px rgba(15, 76, 46, 0.25);
+    position: relative;
+  }
+
+  .qr-frame::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .qr-frame img {
+    display: block;
+    width: clamp(180px, 22vw, 300px);
+    height: clamp(180px, 22vw, 300px);
+  }
+
+  .qr-label {
+    margin-top: 2.5vh;
+    font-family: 'Geist', sans-serif;
+    font-size: clamp(1.4rem, 2.4vw, 2rem);
+    font-weight: 600;
+    color: var(--burgundy);
+    letter-spacing: 0.02em;
+  }
+
+  .qr-sub {
+    margin-top: 0.4vh;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.85rem, 1.1vw, 1rem);
+    font-weight: 500;
+    color: var(--ink);
+    opacity: 0.6;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-mark {
+    position: absolute;
+    bottom: 4vh;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Geist', sans-serif;
+    font-style: italic;
+    font-size: clamp(1rem, 1.3vw, 1.2rem);
+    color: var(--oxblood);
+    opacity: 0.7;
+    letter-spacing: 0.02em;
+    z-index: 1;
+  }
+
+  .hint {
+    position: fixed;
+    bottom: 3vh;
+    right: 3vw;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    color: var(--burgundy);
+    opacity: 0.5;
+    letter-spacing: 0.05em;
+  }
+
+  @media print {
+    .hint { display: none; }
+    .slide { height: 100vh; }
+  }
+</style>
+</head>
+<body>
+
+  <section class="slide">
+    <div class="header">
+      <div class="eyebrow">Network School Showcase</div>
+      <h1>SIP.wine that <em>knows your palate</em></h1>
+      <p class="subhead">Like how Spotify learned your music.</p>
+    </div>
+
+    <div class="qr-row">
+      <div class="qr-card">
+        <div class="qr-frame">
+          <img alt="iPhone App Store QR code" src="qr-appstore.png" />
+        </div>
+        <div class="qr-label">iPhone</div>
+        <div class="qr-sub">APP STORE</div>
+      </div>
+
+      <div class="qr-card">
+        <div class="qr-frame">
+          <img alt="sip.wine website QR code" src="qr-website.png" />
+        </div>
+        <div class="qr-label">Web &amp; Android</div>
+        <div class="qr-sub">SIP.WINE</div>
+      </div>
+    </div>
+
+    <div class="footer-mark">Scan to taste it first — the app that finally learns you.</div>
+  </section>
+
+  <div class="hint">F for fullscreen</div>
+
+<script>
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+</script>
+
+</body>
+</html>
