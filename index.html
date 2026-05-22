@@ -2,20 +2,58 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>YRA Labs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex,nofollow" />
+    <title>Y.RA Labs — AI systems for human taste, memory, and decision-making</title>
+    <meta
+      name="description"
+      content="Y.RA Labs builds intelligent platforms that transform complex behavioral data into intuitive recommendations and discovery experiences."
+    />
     <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#000000" />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yralabs.co/" />
+    <meta
+      property="og:title"
+      content="Y.RA Labs — AI systems for human taste, memory, and decision-making"
+    />
+    <meta
+      property="og:description"
+      content="Y.RA Labs builds intelligent platforms that transform complex behavioral data into intuitive recommendations and discovery experiences."
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Y.RA Labs — AI systems for human taste, memory, and decision-making"
+    />
+    <meta
+      name="twitter:description"
+      content="Y.RA Labs builds intelligent platforms that transform complex behavioral data into intuitive recommendations and discovery experiences."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
       :root{
         --bg0:#000000;
-        --bg1:#050505;
-        --fg:#f3f4f6;
+        --bg1:#080808;
+        --fg:#f4f4f5;
         --muted:#a1a1aa;
-        --line:rgba(255,255,255,.12);
+        --faint:#71717a;
+        --line:rgba(255,255,255,.10);
+        --line-strong:rgba(255,255,255,.18);
         --glow:rgba(255,255,255,.08);
         --accent:#8ab4ff;
-        --radius:20px;
+        --serif:"Newsreader", Georgia, "Times New Roman", serif;
+        --sans:"Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+               "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --mono:ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
       }
 
       *{box-sizing:border-box}
@@ -23,242 +61,582 @@
       body{
         margin:0;
         color:var(--fg);
-        background: radial-gradient(1200px 600px at 15% 20%, rgba(255,255,255,.08), transparent 60%),
-                    radial-gradient(900px 500px at 85% 30%, rgba(138,180,255,.10), transparent 55%),
-                    linear-gradient(180deg, var(--bg0), var(--bg1));
-        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display",
-                     "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
-                     "Apple Color Emoji", "Segoe UI Emoji";
-        letter-spacing: -0.01em;
+        background: linear-gradient(180deg, var(--bg0), var(--bg1));
+        font-family: var(--sans);
+        letter-spacing:-0.01em;
+        line-height:1.6;
         overflow-x:hidden;
+        -webkit-font-smoothing:antialiased;
       }
 
-      /* subtle film grain */
+      /* ambient colour field — slow drift */
+      .aura{
+        position:fixed;
+        inset:-22vh;
+        z-index:-2;
+        pointer-events:none;
+        background:
+          radial-gradient(720px 540px at 16% 12%, rgba(138,180,255,.15), transparent 60%),
+          radial-gradient(680px 520px at 88% 20%, rgba(255,255,255,.07), transparent 58%),
+          radial-gradient(640px 620px at 62% 98%, rgba(138,180,255,.09), transparent 62%);
+        animation: drift 30s ease-in-out infinite alternate;
+      }
+      @keyframes drift{
+        from{ transform: translate3d(0,0,0) scale(1); }
+        to{ transform: translate3d(-3%,2.4%,0) scale(1.09); }
+      }
+
+      /* film grain */
       body::before{
         content:"";
         position:fixed;
         inset:-200px;
+        z-index:-1;
         background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
-        opacity:.06;
+        opacity:.05;
         pointer-events:none;
         transform: rotate(8deg);
       }
 
-      .wrap{
-        min-height:100%;
+      .container{
+        width:100%;
+        max-width:1080px;
+        margin:0 auto;
+        padding:0 clamp(22px, 5vw, 40px);
+      }
+
+      a{ color:inherit; }
+
+      /* ---------- header ---------- */
+      .site-header{
+        border-bottom:1px solid var(--line);
+      }
+      .site-header .container{
         display:flex;
-        flex-direction:column;
+        align-items:center;
+        justify-content:space-between;
+        padding-top: clamp(20px, 3.5vw, 28px);
+        padding-bottom: clamp(20px, 3.5vw, 28px);
       }
-
-      header{
-        padding:32px 22px 0;
-        max-width: 980px;
-        margin: 0 auto;
-        width: 100%;
-      }
-
       .brand{
         display:flex;
         align-items:center;
         gap:10px;
-        color:var(--fg);
-        opacity:.92;
         font-weight:600;
-        letter-spacing:.02em;
+        letter-spacing:.04em;
         text-transform:uppercase;
         font-size:12px;
       }
-
-      .dot{
-        width:10px;height:10px;border-radius:50%;
-        background: radial-gradient(circle at 35% 35%, #fff, rgba(255,255,255,.35) 45%, rgba(255,255,255,.08) 70%);
-        box-shadow: 0 0 24px var(--glow);
+      .logo{
+        display:block;
+        height:46px;
+        width:auto;
+        border-radius:8px;
       }
+      .site-footer .logo{ height:34px; }
+      .navlink{
+        font-size:13px;
+        color:var(--muted);
+        text-decoration:none;
+        border-bottom:1px solid transparent;
+        padding-bottom:2px;
+        transition: color .2s ease, border-color .2s ease;
+      }
+      .navlink:hover{ color:var(--fg); border-bottom-color:var(--accent); }
 
-      main{
-        flex:1;
+      /* ---------- shared ---------- */
+      .section{ padding: clamp(74px, 11vw, 138px) 0; }
+      .section + .section{ border-top:1px solid var(--line); }
+
+      .eyebrow{
         display:flex;
         align-items:center;
-        justify-content:center;
-        padding: 56px 22px 40px;
+        gap:12px;
+        font-family: var(--mono);
+        font-size:11.5px;
+        letter-spacing:.24em;
+        text-transform:uppercase;
+        color:var(--accent);
       }
-
-      .card{
-        width:100%;
-        max-width: 980px;
-        border: 1px solid var(--line);
-        background: rgba(0,0,0,.35);
-        backdrop-filter: blur(10px);
-        border-radius: var(--radius);
-        box-shadow: 0 30px 80px rgba(0,0,0,.6);
-        overflow:hidden;
-        position:relative;
-      }
-
-      .card::after{
+      .eyebrow::before{
         content:"";
+        width:26px;height:1px;
+        background:currentColor;
+        opacity:.65;
+      }
+
+      h1,h2,h3{
+        font-family: var(--serif);
+        font-weight:500;
+        letter-spacing:-0.02em;
+        margin:0;
+      }
+      em{ font-style:italic; }
+
+      /* ---------- hero ---------- */
+      .hero{ position:relative; overflow:hidden; }
+      .hero .container{
+        position:relative;
+        z-index:1;
+        min-height: min(82vh, 760px);
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        padding-top: clamp(70px, 11vw, 120px);
+        padding-bottom: clamp(70px, 11vw, 120px);
+      }
+      .hero h1{
+        margin: 22px 0 0;
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        line-height:1.06;
+        max-width: 17em;
+      }
+      .hero h1 em{ color:#cfe0ff; }
+      .lede{
+        margin: 26px 0 0;
+        color:var(--muted);
+        font-size: clamp(15px, 1.55vw, 18px);
+        line-height:1.7;
+        max-width: 52ch;
+      }
+      .hero-graphic{
         position:absolute;
-        inset:-1px;
-        background: linear-gradient(135deg, rgba(255,255,255,.12), transparent 35%, rgba(138,180,255,.12) 70%, transparent);
-        opacity:.25;
+        top:50%;
+        right: clamp(-90px, -4vw, -40px);
+        transform: translateY(-50%);
+        width: clamp(340px, 44vw, 600px);
+        opacity:.55;
+        z-index:0;
         pointer-events:none;
       }
 
-      .inner{
-        padding: 44px 34px 42px;
+      /* ---------- beliefs ---------- */
+      .section-head h2{
+        margin-top:18px;
+        font-size: clamp(1.9rem, 3.6vw, 3rem);
+        line-height:1.12;
+      }
+      .beliefs-grid{
+        margin-top: clamp(34px, 5vw, 58px);
+        display:grid;
+        grid-template-columns:1fr 1fr;
+      }
+      .belief{
+        border-top:1px solid var(--line);
+        padding: clamp(28px, 3.4vw, 42px) 0;
+      }
+      .belief:nth-child(odd){ padding-right: clamp(20px, 4vw, 56px); }
+      .belief:nth-child(even){
+        padding-left: clamp(20px, 4vw, 56px);
+        border-left:1px solid var(--line);
+      }
+      .belief .pos{
+        font-family: var(--serif);
+        font-weight:500;
+        font-size: clamp(1.5rem, 2.7vw, 2.15rem);
+        letter-spacing:-0.02em;
+        line-height:1.1;
+      }
+      .belief .neg{
+        margin-top:8px;
+        color:var(--faint);
+        font-size:15px;
+      }
+
+      /* ---------- featured product ---------- */
+      .product-panel{
         position:relative;
-        z-index:1;
+        overflow:hidden;
+        margin-top: clamp(30px, 4vw, 48px);
+        padding: clamp(30px, 4.4vw, 64px);
+        border:1px solid var(--line-strong);
+        border-radius:24px;
+        background:
+          linear-gradient(160deg, rgba(138,180,255,.07), transparent 46%),
+          rgba(255,255,255,.022);
       }
-
-      h1{
-        margin:0 0 10px;
-        font-size: clamp(30px, 4.6vw, 52px);
-        line-height:1.06;
-        letter-spacing: -0.03em;
+      .product-graphic{
+        position:absolute;
+        top: clamp(-70px, -5vw, -40px);
+        right: clamp(-70px, -5vw, -40px);
+        width: clamp(220px, 30vw, 380px);
+        opacity:.4;
+        pointer-events:none;
       }
-
-      .sub{
-        margin:0;
-        color: var(--muted);
-        font-size: clamp(14px, 1.5vw, 16px);
-        line-height: 1.7;
-        max-width: 62ch;
+      .product-name{
+        position:relative;
+        margin-top:18px;
+        font-family: var(--sans);
+        font-weight:600;
+        letter-spacing:-0.03em;
+        font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+        line-height:1;
       }
-
-      .pillrow{
-        margin-top:22px;
+      .product-desc{
+        position:relative;
+        margin-top:18px;
+        color:var(--muted);
+        font-size: clamp(15px, 1.5vw, 17px);
+        line-height:1.7;
+        max-width: 46ch;
+      }
+      .product-lists{
+        position:relative;
+        margin-top: clamp(30px, 4vw, 46px);
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap: clamp(26px, 4vw, 56px);
+      }
+      .list-label{
+        font-family: var(--mono);
+        font-size:11px;
+        letter-spacing:.2em;
+        text-transform:uppercase;
+        color:var(--faint);
+      }
+      .plist{
+        margin: 16px 0 0;
+        padding:0;
+        list-style:none;
+      }
+      .plist li{
+        position:relative;
+        padding: 7px 0 7px 22px;
+        font-size:15.5px;
+        color:var(--fg);
+      }
+      .plist li::before{
+        content:"";
+        position:absolute;
+        left:0;
+        top:13px;
+        width:7px;
+        height:11px;
+        background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='84 36 104 184'%3E%3Cpath fill='%238ab4ff' d='M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z'/%3E%3C/svg%3E") no-repeat center / contain;
+      }
+      .product-foot{
+        position:relative;
+        margin-top: clamp(30px, 4vw, 46px);
+        padding-top: clamp(22px, 3vw, 30px);
+        border-top:1px solid var(--line);
         display:flex;
         flex-wrap:wrap;
-        gap:10px;
+        align-items:center;
+        gap:16px 22px;
       }
-
+      .avail{
+        font-family: var(--mono);
+        font-size:12px;
+        letter-spacing:.14em;
+        text-transform:uppercase;
+        color:var(--muted);
+        margin-right:auto;
+      }
       .pill{
-        border: 1px solid var(--line);
+        display:inline-flex;
+        align-items:center;
+        gap:7px;
+        border:1px solid var(--line-strong);
         background: rgba(255,255,255,.03);
-        padding: 8px 12px;
-        border-radius: 999px;
-        color: rgba(243,244,246,.9);
-        font-size: 12px;
-        letter-spacing: .01em;
-        user-select:none;
+        padding:11px 18px;
+        border-radius:999px;
+        color:var(--fg);
+        font-size:13.5px;
+        font-weight:500;
+        text-decoration:none;
+        transition: border-color .2s ease, color .2s ease, background .2s ease, transform .2s ease;
       }
-
-      a.pill{
-        padding: 9px 16px;
-        font-size: 13px;
-        transition: border-color .2s ease, color .2s ease, background .2s ease;
-      }
-      a.pill:hover{
+      .pill:hover{
         border-color: rgba(138,180,255,.65);
-        background: rgba(138,180,255,.06);
-        color: #cfe0ff;
+        background: rgba(138,180,255,.07);
+        color:#cfe0ff;
+        transform: translateY(-1px);
       }
+      .pill .arr{ opacity:.7; }
 
-      .update{
-        margin-top: 30px;
-        padding-top: 26px;
-        border-top: 1px solid rgba(255,255,255,.08);
+      /* ---------- footer ---------- */
+      .site-footer{
+        border-top:1px solid var(--line);
       }
-
-      .update-tag{
-        display:inline-block;
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: .14em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: 10px;
-      }
-
-      .update-text{
-        margin: 0;
-        color: var(--muted);
-        font-size: clamp(14px, 1.5vw, 16px);
-        line-height: 1.7;
-        max-width: 62ch;
-      }
-
-      .update-text strong{
-        color: var(--fg);
-        font-weight: 600;
-      }
-
-      footer{
-        padding: 26px 22px 30px;
-        max-width: 980px;
-        margin: 0 auto;
-        width: 100%;
-        color: var(--muted);
+      .site-footer .container{
+        padding-top: clamp(28px, 4vw, 40px);
+        padding-bottom: clamp(28px, 4vw, 40px);
         display:flex;
+        flex-wrap:wrap;
         justify-content:space-between;
         align-items:center;
-        gap:12px;
-        border-top: 1px solid rgba(255,255,255,.06);
+        gap:14px 20px;
+        color:var(--faint);
+        font-size:13px;
       }
-
-      a{
-        color: var(--fg);
+      .site-footer a{
+        color:var(--muted);
         text-decoration:none;
-        border-bottom: 1px solid rgba(255,255,255,.18);
-        padding-bottom: 2px;
+        border-bottom:1px solid rgba(255,255,255,.16);
+        padding-bottom:2px;
+        transition: color .2s ease, border-color .2s ease;
       }
-      a:hover{border-bottom-color: rgba(138,180,255,.65); color: #cfe0ff;}
+      .site-footer a:hover{ color:#cfe0ff; border-bottom-color:rgba(138,180,255,.65); }
 
-      .small{
-        font-size:12px;
-        opacity:.95;
+      /* ---------- generative SVG ---------- */
+      .edge{ stroke: var(--accent); stroke-width:1; opacity:.32; }
+      .node{ fill:#cfe0ff; animation: pulse 4.6s ease-in-out infinite; }
+      .node-core{ fill:#fff; }
+      @keyframes pulse{
+        0%,100%{ opacity:.4; }
+        50%{ opacity:1; }
       }
 
-      @media (max-width: 520px){
-        .inner{padding: 34px 22px 34px;}
-        footer{flex-direction:column; align-items:flex-start;}
+      /* ---------- scroll reveal ---------- */
+      .js .reveal{
+        opacity:0;
+        transform: translateY(24px);
+        transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+      }
+      .js .reveal.in{ opacity:1; transform:none; }
+      .js .belief.reveal:nth-child(2){ transition-delay:.07s; }
+      .js .belief.reveal:nth-child(3){ transition-delay:.14s; }
+      .js .belief.reveal:nth-child(4){ transition-delay:.21s; }
+
+      /* ---------- responsive ---------- */
+      @media (max-width: 680px){
+        .beliefs-grid{ grid-template-columns:1fr; }
+        .belief:nth-child(odd),
+        .belief:nth-child(even){
+          padding-left:0;
+          padding-right:0;
+          border-left:none;
+        }
+        .product-lists{ grid-template-columns:1fr; }
+        .hero-graphic{ width: 300px; opacity:.32; right:-90px; }
+        .avail{ margin-right:0; width:100%; }
+      }
+
+      @media (prefers-reduced-motion: reduce){
+        .js .reveal{ opacity:1; transform:none; transition:none; }
+        .aura{ animation:none; }
+        .node{ animation:none; opacity:.85; }
+        .pill:hover{ transform:none; }
       }
     </style>
   </head>
 
   <body>
-    <div class="wrap">
-      <header>
-        <div class="brand">
-          <span class="dot" aria-hidden="true"></span>
-          <span>Y.RA Labs</span>
-        </div>
-      </header>
+    <div class="aura" aria-hidden="true"></div>
 
-      <main>
-        <section class="card" aria-label="YRA Labs stealth page">
-          <div class="inner">
-            <h2>Building thoughtful consumer software.</h1>
-            <p class="sub">
-              Y.RA Labs develops products focused on discovery and personalization.
+    <header class="site-header">
+      <div class="container">
+        <div class="brand">
+          <img class="logo" src="yralabs-logo.jpg" alt="Y.RA Labs" />
+        </div>
+        <a class="navlink" href="mailto:contact@yralabs.co">Contact</a>
+      </div>
+    </header>
+
+    <main>
+      <!-- ===== Hero ===== -->
+      <section class="section hero" aria-label="Y.RA Labs">
+        <svg class="hero-graphic" viewBox="0 0 480 480" aria-hidden="true" focusable="false">
+          <g class="edges">
+            <line class="edge" x1="70" y1="90"  x2="200" y2="55" />
+            <line class="edge" x1="200" y1="55" x2="360" y2="110" />
+            <line class="edge" x1="70" y1="90"  x2="150" y2="210" />
+            <line class="edge" x1="200" y1="55" x2="300" y2="200" />
+            <line class="edge" x1="360" y1="110" x2="300" y2="200" />
+            <line class="edge" x1="360" y1="110" x2="430" y2="260" />
+            <line class="edge" x1="300" y1="200" x2="430" y2="260" />
+            <line class="edge" x1="300" y1="200" x2="150" y2="210" />
+            <line class="edge" x1="150" y1="210" x2="60"  y2="330" />
+            <line class="edge" x1="150" y1="210" x2="230" y2="360" />
+            <line class="edge" x1="300" y1="200" x2="230" y2="360" />
+            <line class="edge" x1="230" y1="360" x2="380" y2="390" />
+            <line class="edge" x1="430" y1="260" x2="380" y2="390" />
+            <line class="edge" x1="60"  y1="330" x2="130" y2="430" />
+            <line class="edge" x1="230" y1="360" x2="130" y2="430" />
+          </g>
+          <g class="nodes">
+            <circle class="node" cx="70"  cy="90"  r="4"   style="animation-delay:0s" />
+            <circle class="node" cx="200" cy="55"  r="5"   style="animation-delay:.4s" />
+            <circle class="node" cx="360" cy="110" r="4"   style="animation-delay:.9s" />
+            <circle class="node node-core" cx="300" cy="200" r="7" style="animation-delay:.2s" />
+            <circle class="node" cx="430" cy="260" r="3.5" style="animation-delay:1.3s" />
+            <circle class="node" cx="150" cy="210" r="4.5" style="animation-delay:.6s" />
+            <circle class="node" cx="60"  cy="330" r="4"   style="animation-delay:1.7s" />
+            <circle class="node" cx="230" cy="360" r="4.5" style="animation-delay:1.0s" />
+            <circle class="node" cx="380" cy="390" r="4"   style="animation-delay:2.1s" />
+            <circle class="node" cx="130" cy="430" r="3.5" style="animation-delay:1.5s" />
+          </g>
+        </svg>
+
+        <div class="container">
+          <p class="eyebrow reveal">Creative Intelligence</p>
+          <h1 class="reveal">
+            AI systems for human <em>taste, memory, and decision-making</em>.
+          </h1>
+          <p class="lede reveal">
+            Y.RA Labs builds intelligent platforms that transform complex behavioral
+            data into intuitive recommendations and discovery experiences.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== Beliefs ===== -->
+      <section class="section beliefs" aria-label="What we believe">
+        <div class="container">
+          <div class="section-head reveal">
+            <p class="eyebrow">What we believe</p>
+            <h2>We believe modern AI should feel —</h2>
+          </div>
+
+          <div class="beliefs-grid">
+            <div class="belief reveal">
+              <div class="pos">Personal</div>
+              <div class="neg">not mechanical</div>
+            </div>
+            <div class="belief reveal">
+              <div class="pos">Exploratory</div>
+              <div class="neg">not transactional</div>
+            </div>
+            <div class="belief reveal">
+              <div class="pos">Assistive</div>
+              <div class="neg">not overwhelming</div>
+            </div>
+            <div class="belief reveal">
+              <div class="pos">Human-centered</div>
+              <div class="neg">not dashboard-centered</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Featured product ===== -->
+      <section class="section" aria-label="Featured product — SIP.wine">
+        <div class="container">
+          <p class="eyebrow reveal">Featured Product</p>
+
+          <div class="product-panel reveal">
+            <svg class="product-graphic" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
+              <g class="edges">
+                <line class="edge" x1="200" y1="200" x2="320" y2="200" />
+                <line class="edge" x1="200" y1="200" x2="285" y2="285" />
+                <line class="edge" x1="200" y1="200" x2="200" y2="320" />
+                <line class="edge" x1="200" y1="200" x2="115" y2="285" />
+                <line class="edge" x1="200" y1="200" x2="80"  y2="200" />
+                <line class="edge" x1="200" y1="200" x2="115" y2="115" />
+                <line class="edge" x1="200" y1="200" x2="200" y2="80" />
+                <line class="edge" x1="200" y1="200" x2="285" y2="115" />
+                <line class="edge" x1="200" y1="80"  x2="285" y2="115" />
+                <line class="edge" x1="320" y1="200" x2="285" y2="285" />
+                <line class="edge" x1="115" y1="115" x2="80"  y2="200" />
+                <line class="edge" x1="115" y1="285" x2="200" y2="320" />
+              </g>
+              <g class="nodes">
+                <circle class="node node-core" cx="200" cy="200" r="8" style="animation-delay:0s" />
+                <circle class="node" cx="320" cy="200" r="4.5" style="animation-delay:.3s" />
+                <circle class="node" cx="285" cy="285" r="4"   style="animation-delay:.7s" />
+                <circle class="node" cx="200" cy="320" r="5"   style="animation-delay:1.1s" />
+                <circle class="node" cx="115" cy="285" r="4"   style="animation-delay:1.5s" />
+                <circle class="node" cx="80"  cy="200" r="4.5" style="animation-delay:1.9s" />
+                <circle class="node" cx="115" cy="115" r="4"   style="animation-delay:2.3s" />
+                <circle class="node" cx="200" cy="80"  r="5"   style="animation-delay:.9s" />
+                <circle class="node" cx="285" cy="115" r="4"   style="animation-delay:1.3s" />
+              </g>
+            </svg>
+
+            <h2 class="product-name">SIP.wine</h2>
+            <p class="product-desc">
+              An AI-powered wine discovery platform that learns personal palate,
+              social preference, context, and exploration patterns.
             </p>
 
-            <div class="update">
-              <span class="update-tag">Now building</span>
-              <p class="update-text">
-                <strong>Sip.wine</strong> &mdash; an app that learns your palate, the way
-                Spotify learned your music. Check it out:
-              </p>
-              <div class="pillrow">
-                <a class="pill" href="https://apps.apple.com/app/id6754211582" target="_blank" rel="noopener">App Store &#8599;</a>
-                <a class="pill" href="https://sip.wine" target="_blank" rel="noopener">sip.wine &#8599;</a>
+            <div class="product-lists">
+              <div>
+                <div class="list-label">Users can</div>
+                <ul class="plist">
+                  <li>Scan wine shelves, menus, and bottles</li>
+                  <li>Discover wines aligned to mood and occasion</li>
+                  <li>Explore unfamiliar regions and styles</li>
+                </ul>
+              </div>
+              <div>
+                <div class="list-label">SIP.wine combines</div>
+                <ul class="plist">
+                  <li>Semantic wine intelligence</li>
+                  <li>Recommendation systems</li>
+                  <li>Social taste mapping</li>
+                </ul>
               </div>
             </div>
 
+            <div class="product-foot">
+              <span class="avail">Available now on iOS</span>
+              <a
+                class="pill"
+                href="https://apps.apple.com/app/id6754211582"
+                target="_blank"
+                rel="noopener"
+                >App Store <span class="arr" aria-hidden="true">&#8599;</span></a
+              >
+              <a
+                class="pill"
+                href="https://sip.wine"
+                target="_blank"
+                rel="noopener"
+                >sip.wine <span class="arr" aria-hidden="true">&#8599;</span></a
+              >
+            </div>
           </div>
-        </section>
-      </main>
-
-      <footer>
-        <div class="small">© <span>2025</span> Y.RA Labs.</div>
-        <div class="small">
-           Get in touch: <a href="mailto:contact@yralabs.co">contact@yralabs.co</a>
         </div>
-      </footer>
-    </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="brand">
+          <img class="logo" src="yralabs-logo.jpg" alt="Y.RA Labs" />
+        </div>
+        <div>&copy; <span id="y">2026</span> Y.RA Labs. All rights reserved.</div>
+        <div>
+          Get in touch:
+          <a href="mailto:contact@yralabs.co">contact@yralabs.co</a>
+        </div>
+      </div>
+    </footer>
 
     <script>
-      document.getElementById("y").textContent = new Date().getFullYear();
+      (function () {
+        var root = document.documentElement;
+        root.classList.add("js");
+
+        var yearEl = document.getElementById("y");
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+        var reveals = document.querySelectorAll(".reveal");
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (reduce || !("IntersectionObserver" in window)) {
+          reveals.forEach(function (el) {
+            el.classList.add("in");
+          });
+          return;
+        }
+
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("in");
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+        );
+
+        reveals.forEach(function (el) {
+          io.observe(el);
+        });
+      })();
     </script>
   </body>
 </html>
