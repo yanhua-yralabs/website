@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"https://yralabs.co/network-school-showcase.html\")",
+      "Bash(curl -s -o /dev/null -w \"status=%{http_code} type=%{content_type} size=%{size_download}\\\\n\" \"https://yralabs.co/qr-appstore.png\")",
+      "Bash(curl -s -o /dev/null -w \"status=%{http_code} type=%{content_type} size=%{size_download}\\\\n\" \"https://yralabs.co/qr-website.png\")",
+      "Bash(curl -s -o /dev/null -w \"status=%{http_code}\\\\n\" \"https://yralabs.co/\")",
+      "Bash(curl -s \"https://yralabs.co/network-school-showcase.html\")",
+      "Bash(curl -sI \"https://yralabs.co/network-school-showcase.html\")",
+      "Bash(curl -sI \"https://yralabs.co/qr-appstore.png\")",
+      "Bash(curl -s -o /dev/null -w \"appstore: status=%{http_code} size=%{size_download}\\\\n\" \"https://yralabs.co/qr-appstore.png?v=$\\(date +%s\\)\")",
+      "Bash(curl -s -o /dev/null -w \"website:  status=%{http_code} size=%{size_download}\\\\n\" \"https://yralabs.co/qr-website.png?v=$\\(date +%s\\)\")"
+    ]
+  }
+}
